@@ -10,17 +10,9 @@ from socketio.namespace import BaseNamespace
 from socketio.mixins import BroadcastMixin
 
 
-class CPUNamespace(BaseNamespace, BroadcastMixin):
+class ChatNamespace(BaseNamespace, BroadcastMixin):
     def recv_connect(self):
         def sendcpu():
-            # prev = None
-            # while True:
-            #     vals = psutil.cpu_percent(interval=1, percpu=True)
-            #
-            #     if prev:
-            #         percent = (sum(vals) - sum(prev))
-            #         self.emit('cpu_data', {'point': percent})
-            #     prev = vals
 
             self.emit('cpu_data', {'point': 1})
             gevent.sleep(0.1)
@@ -35,26 +27,26 @@ class Application(object):
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO'].strip('/') or 'index.html'
 
-        if path.startswith('static/') or path == 'index.html':
-            try:
-                data = open(path).read()
-            except Exception:
-                return not_found(start_response)
-
-            if path.endswith(".js"):
-                content_type = "text/javascript"
-            elif path.endswith(".css"):
-                content_type = "text/css"
-            elif path.endswith(".swf"):
-                content_type = "application/x-shockwave-flash"
-            else:
-                content_type = "text/html"
-
-            start_response('200 OK', [('Content-Type', content_type)])
-            return [data]
+        # if path.startswith('static/') or path == 'index.html':
+        #     try:
+        #         data = open(path).read()
+        #     except Exception:
+        #         return not_found(start_response)
+        #
+        #     if path.endswith(".js"):
+        #         content_type = "text/javascript"
+        #     elif path.endswith(".css"):
+        #         content_type = "text/css"
+        #     elif path.endswith(".swf"):
+        #         content_type = "application/x-shockwave-flash"
+        #     else:
+        #         content_type = "text/html"
+        #
+        #     start_response('200 OK', [('Content-Type', content_type)])
+        #     return [data]
 
         if path.startswith("socket.io"):
-            socketio_manage(environ, {'/chat': CPUNamespace})
+            socketio_manage(environ, {'/chat': ChatNamespace})
         else:
             return not_found(start_response)
 
