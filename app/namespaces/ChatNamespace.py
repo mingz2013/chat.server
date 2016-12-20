@@ -61,6 +61,7 @@ class ChatNamespace(Namespace):
         emit('my_pong')
 
     def on_connect(self):
+        print "connect id", request.sid
         global thread
         if thread is None:
             thread = self.socketio.start_background_task(target=self.background_thread)
