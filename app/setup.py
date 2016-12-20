@@ -1,18 +1,25 @@
-# -*- coding:utf-8 -*-
-__author__ = 'zhaojm'
-from gevent import monkey
+#!/usr/bin/env python
 
-monkey.patch_all()
-import gevent
-# import psutil
+import os
+import sys
 
-from socketio import socketio_manage
-from socketio.server import SocketIOServer
-from socketio.namespace import BaseNamespace
-from socketio.mixins import BroadcastMixin
+# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.abspath('.'))
+from app import create_app, create_socketio
+
+print "************* CURRENT CONFIG MODE: ", os.getenv('mingz.server.config.mode')
+mode = os.getenv('mingz.server.config.mode') or 'default'
+if mode:
+    mode = mode.lower()
+    print 'current config mode: %s' % mode
+app = create_app(mode)
+socketio = create_socketio(app)
 
 if __name__ == '__main__':
-    print 'Listening on port http://0.0.0.0:8080 and on port 10843 (flash policy server)'
-    SocketIOServer(('0.0.0.0', 9000), Application(),
-                   resource="socket.io", policy_server=True,
-                   policy_listener=('0.0.0.0', 10843)).serve_forever()
+    from helpers.default_encoding import init_encoding
+
+    init_encoding()
+
+    # app.debug = True
+    # app.run(host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
