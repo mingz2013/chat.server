@@ -1,10 +1,19 @@
-from flask import Flask, render_template, session, request
-from flask_socketio import SocketIO, Namespace, emit, join_room, leave_room, \
+from flask import session, request, current_app
+from flask_socketio import Namespace, emit, join_room, leave_room, \
     close_room, rooms, disconnect
+
+thread = None
 
 
 class ChatNamespace(Namespace):
+    def on_login(self, message):
+        current_app.logger.info(message)
+        session['receive_count'] = session.get('receive_count', 0) + 1
+        emit('my_response',
+             {'data': message['data'], 'count': session['receive_count']})
+
     def on_my_event(self, message):
+        print message
         session['receive_count'] = session.get('receive_count', 0) + 1
         emit('my_response',
              {'data': message['data'], 'count': session['receive_count']})
@@ -67,5 +76,4 @@ class ChatNamespace(Namespace):
             self.socketio.sleep(10)
             count += 1
             self.socketio.emit('my_response',
-                               {'data': 'Server generated event', 'count': count},
-                               namespace='/test')
+                               {'data': 'Server generated event', 'count': count})
