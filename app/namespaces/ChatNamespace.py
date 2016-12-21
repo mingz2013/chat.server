@@ -62,19 +62,23 @@ class ChatNamespace(Namespace):
 
     def on_connect(self):
         print "connect id", request.sid
-        global thread
-        if thread is None:
-            thread = self.socketio.start_background_task(target=self.background_thread)
-        emit('my_response', {'data': 'Connected', 'count': 0})
+        session['receive_count'] = session.get('receive_count', 0) + 1
+
+        # global thread
+        # if thread is None:
+        # thread = self.socketio.start_background_task(target=self.background_thread)
+        emit('heartbeat', {'data': 'Connected', 'count': session['receive_count']})
 
     def on_disconnect(self):
         print('Client disconnected', request.sid)
 
     def background_thread(self):
         """Example of how to send server generated events to clients."""
-        count = 0
+        self.count = 0
         while True:
-            self.socketio.sleep(10)
-            count += 1
-            self.socketio.emit('my_response',
-                               {'data': 'Server generated event', 'count': count})
+            # from ..setup import socketio
+            self.socketio.sleep(2)
+            self.count += 1
+            print "send my response.."
+            print self.socketio
+            self.emit('heartbeat', {'data': 'Server generated event', 'count': self.count})
