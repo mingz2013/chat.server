@@ -14,6 +14,11 @@ class ChatNamespace(Namespace):
         # thread = self.socketio.start_background_task(target=self.background_thread)
         # emit('heartbeat', {'data': 'Connected', 'count': session['receive_count']})
 
+    def on_test(self, message):
+        sid = request.sid
+
+        pass
+
     def on_signin(self, message):
         current_app.logger.info(message)
         auth = message.get('auth')
@@ -107,13 +112,13 @@ class ChatNamespace(Namespace):
     def on_disconnect(self):
         print('Client disconnected', request.sid)
 
-    def background_thread(self):
-        """Example of how to send server generated events to clients."""
-        self.count = 0
-        while True:
-            # from ..setup import socketio
-            self.socketio.sleep(2)
-            self.count += 1
-            print "send my response.."
-            print self.socketio
-            self.emit('heartbeat', {'data': 'Server generated event', 'count': self.count})
+        # def background_thread(self):
+        #     """Example of how to send server generated events to clients."""
+        #     self.count = 0
+        #     while True:
+        #         # from ..setup import socketio
+        #         self.socketio.sleep(2)
+        #         self.count += 1
+        #         print "send my response.."
+        #         print self.socketio
+        #         self.emit('heartbeat', {'data': 'Server generated event', 'count': self.count})

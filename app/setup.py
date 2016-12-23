@@ -3,6 +3,10 @@
 import os
 import sys
 
+from gevent import monkey
+
+monkey.patch_all()
+
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath('.'))
 from app import create_app, create_socketio
