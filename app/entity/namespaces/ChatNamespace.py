@@ -13,6 +13,10 @@ class ChatNamespace(Namespace):
         print "on message..."
         print message
 
+    def on_anything(self, message):
+        print "on anything..."
+        print message
+
     def on_json(self, json):
         print "on json..."
         print json
