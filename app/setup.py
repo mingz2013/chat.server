@@ -12,6 +12,7 @@ mode = os.getenv('mingz.server.config.mode') or 'default'
 if mode:
     mode = mode.lower()
     print 'current config mode: %s' % mode
+
 app = create_app(mode)
 socketio = create_socketio(app)
 

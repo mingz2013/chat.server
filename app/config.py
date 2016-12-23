@@ -10,6 +10,8 @@ import os
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
 
+    MONGODB_DB = 'chat'
+
     @staticmethod
     def init_app(app):
         pass

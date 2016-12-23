@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from mongoengine import Document, StringField
+from app import db
+from BaseModel import BaseModel
 
 
-class User(Document):
-    email = StringField(required=True)
-    first_name = StringField(max_length=50)
-    last_name = StringField(max_length=50)
+class User(BaseModel):
+    username = db.StringField(required=True)
+    password = db.StringField(max_length=50)
