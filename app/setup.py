@@ -3,11 +3,11 @@
 from gevent import monkey
 monkey.patch_all()
 
+import os
 import sys
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath('.'))
 
-import os
 print "************* CURRENT CONFIG MODE: ", os.getenv('mingz.server.config.mode')
 mode = os.getenv('mingz.server.config.mode') or 'default'
 if mode:
