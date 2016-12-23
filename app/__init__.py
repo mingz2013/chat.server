@@ -93,7 +93,7 @@ def create_socketio(app):
     from flask_socketio import SocketIO
     socketio = SocketIO(app, async_mode=async_mode)
 
-    from entity.namespaces.ChatNamespace import ChatNamespace
+    from entity.net.ChatNamespace import ChatNamespace
     socketio.on_namespace(ChatNamespace('/chat'))
 
     return socketio
