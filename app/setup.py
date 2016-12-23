@@ -1,23 +1,23 @@
 #!/usr/bin/env python
 
-import os
-import sys
-
 from gevent import monkey
-
 monkey.patch_all()
 
+import sys
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath('.'))
-from app import create_app, create_socketio
 
+import os
 print "************* CURRENT CONFIG MODE: ", os.getenv('mingz.server.config.mode')
 mode = os.getenv('mingz.server.config.mode') or 'default'
 if mode:
     mode = mode.lower()
     print 'current config mode: %s' % mode
 
+from app import create_app
 app = create_app(mode)
+
+from app.entity.net.socketio import create_socketio
 socketio = create_socketio(app)
 
 if __name__ == '__main__':
