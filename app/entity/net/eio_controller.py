@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app import eio
+from app.entity import eio
 
 from .message_handler import msgHandler
 

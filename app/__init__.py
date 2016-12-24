@@ -71,13 +71,6 @@ def register_logging(app):
 from flask_mongoengine import MongoEngine
 db = MongoEngine()
 
-import engineio
-
-async_mode = 'gevent'
-eio = engineio.Server(async_mode=async_mode)
-
-from .entity.net import eio_controller
-
 
 def create_app(mode):
     from flask import Flask
@@ -89,7 +82,6 @@ def create_app(mode):
     app.config_mode = mode
 
     db.init_app(app)
-    app.wsgi_app = engineio.Middleware(eio, app.wsgi_app)
 
     register_logging(app)
     register_routes(app)
