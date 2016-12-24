@@ -10,10 +10,6 @@ class MessageHandler(object):
 
         self.connManager = ConnectionManager()
 
-    # def __call__(self, event, handler):
-    #     print "__call__"
-    #     return self.on(event, handler)
-
     def on(self, event, handler=None):
         print "on.."
 
