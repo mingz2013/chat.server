@@ -24,4 +24,4 @@ def message(sid, message):
 @eio.on('disconnect')
 def disconnect(sid):
     print('disconnect ', sid)
-    msgHandler.connManager.dropCollection(sid)
+    msgHandler.connManager.dropConnection(sid)
