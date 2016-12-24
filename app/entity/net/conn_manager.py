@@ -22,17 +22,14 @@ class ConnectionManager(object):
             print e
 
     def getConnection(self, sid):
-        """根据ID获取一条连接
-        @param connID: int 连接的id
-        """
         return self._connections.get(sid)
 
-    def loseConnection(self, sid):
-        """根据连接ID主动端口与客户端的连接
+    def disconnect(self, sid):
+        """根据连接ID主动断开与客户端的连接
         """
         _conn = self.getConnection(sid)
         if _conn:
-            _conn.loseConnection()
+            _conn.disconnect()
             self.dropConnection(sid)
 
     def send(self, msg, receivers):

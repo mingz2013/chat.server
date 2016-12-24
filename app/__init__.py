@@ -69,6 +69,7 @@ def register_logging(app):
 
 
 from flask_mongoengine import MongoEngine
+
 db = MongoEngine()
 
 

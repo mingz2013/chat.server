@@ -15,7 +15,6 @@ from app import create_app
 app = create_app(mode)
 
 
-
 if __name__ == '__main__':
     from helpers.default_encoding import init_encoding
     init_encoding()
@@ -30,4 +29,4 @@ if __name__ == '__main__':
 
     from app.entity import Server
 
-    Server().serve_forever(app, 5000)
+    Server().serve_forever(app, 5000, reload=True)

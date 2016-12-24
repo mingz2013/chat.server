@@ -15,8 +15,6 @@ def connect(sid, environ):
 @eio.on('message')
 def message(sid, message):
     print('message from', sid, message)
-    # print sid
-    # print type(message)
     # eio.send(sid, 'Thank you for your message!', binary=False)
     msgHandler.handle_message(sid, message)
 
