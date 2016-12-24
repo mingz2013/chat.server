@@ -11,11 +11,11 @@ class Server(object):
     def __init__(self):
         pass
 
-    def serve_forever(self, app,
-                      port=5000,
-                      reload=True
-                      ):
-        def run_server():
+    def run(self, app,
+            port=5000,
+            reload=True
+            ):
+        def _run_server():
             if eio.async_mode == 'threading':
                 # deploy with Werkzeug
                 app.run(threaded=True)
@@ -46,6 +46,6 @@ class Server(object):
 
         if reload:
             from werkzeug.serving import run_with_reloader
-            run_with_reloader(run_server)
+            run_with_reloader(_run_server)
         else:
-            run_server()
+            _run_server()

@@ -29,4 +29,4 @@ if __name__ == '__main__':
 
     from app.entity import Server
 
-    Server().serve_forever(app, 5000, reload=True)
+    Server().run(app, port=5000, reload=True)
