@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..serviceHandle import serviceHandle
+from .. import ServiceHandle
 
 
-@serviceHandle("login")
-def login(data):
+@ServiceHandle("login")
+def login(conn, data):
+    print data
     pass
