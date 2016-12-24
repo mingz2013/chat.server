@@ -11,7 +11,7 @@ if mode:
     mode = mode.lower()
     print 'current config mode: %s' % mode
 
-from app.website import create_app
+from app import create_app
 app = create_app(mode)
 
 
