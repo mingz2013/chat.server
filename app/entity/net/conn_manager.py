@@ -35,13 +35,14 @@ class ConnectionManager(object):
             _conn.loseConnection()
             self.dropConnection(sid)
 
-    def pushObject(self, sid, msg, sendList):
+    def send(self, msg, receivers):
         """主动推送消息
         """
-        for target in sendList:
+        assert isinstance(receivers, list), "receivers type error"
+        for target in receivers:
             try:
                 _conn = self.getConnection(target)
                 if _conn:
-                    _conn.safeToWriteData(sid, msg)
+                    _conn.send(msg)
             except Exception, e:
                 print e
