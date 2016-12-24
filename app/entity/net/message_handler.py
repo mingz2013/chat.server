@@ -35,7 +35,7 @@ class MessageHandler(object):
             #     return self.start_background_task(self.handlers[event], *args)
             # else:
             #     return self.handlers[event](*args)
-            return self._handlers[event](conn, data)
+            return self._handlers[event](conn, self.connManager, data)
 
 
 msgHandler = MessageHandler()

@@ -5,6 +5,6 @@ from ..net.message_handler import msgHandler
 
 
 @msgHandler.on("login")
-def login(conn, data):
+def login(conn, manager, data):
     print data
     pass
