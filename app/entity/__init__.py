@@ -11,7 +11,8 @@ class Server(object):
     def __init__(self):
         pass
 
-    def run(self, app,
+    def run(self,
+            app,
             port=5000,
             reload=True
             ):
