@@ -2,10 +2,9 @@
 __author__ = 'zhaojm'
 
 from app import db
-from BaseModel import BaseModel
 
 
-class Message(BaseModel):
+class Message(db.Document):
     send_time = db.DateTimeField()
     content = db.StringField()
 

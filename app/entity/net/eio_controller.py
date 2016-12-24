@@ -3,18 +3,13 @@ __author__ = 'zhaojm'
 
 from app import eio
 
-from .ConnectionManager import ConnectionManager
-from ..handler import service
-
-connectionManager = ConnectionManager()
+from .message_handler import msgHandler
 
 
 @eio.on('connect')
 def connect(sid, environ):
     print("connect ", sid)
-
-    connectionManager.addConnection(sid)
-
+    msgHandler.connManager.addConnection(sid)
 
 @eio.on('message')
 def message(sid, message):
@@ -22,11 +17,11 @@ def message(sid, message):
     print sid
     print type(message)
     # eio.send(sid, 'Thank you for your message!', binary=False)
-    conn = connectionManager.getConnectionByID(sid)
-    service.callTarget(conn, message)
+
+    msgHandler.handle_message(sid, message)
 
 
 @eio.on('disconnect')
 def disconnect(sid):
     print('disconnect ', sid)
-    connectionManager.dropConnectionByID(sid)
+    msgHandler.connManager.dropCollection(sid)

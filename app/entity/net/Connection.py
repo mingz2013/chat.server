@@ -3,6 +3,7 @@ __author__ = 'zhaojm'
 
 from app import eio
 
+
 # 每一个链接
 class Connection(object):
     def __init__(self, sid):

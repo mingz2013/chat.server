@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from .. import ServiceHandle
+from ..net.message_handler import msgHandler
 
 
-@ServiceHandle("login")
+@msgHandler.on("login")
 def login(conn, data):
     print data
     pass

@@ -2,10 +2,9 @@
 __author__ = 'zhaojm'
 
 from app import db
-from BaseModel import BaseModel
 
 
-class Room(BaseModel):
+class Room(db.Document):
     creator = db.ObjectIdField()
 
 
