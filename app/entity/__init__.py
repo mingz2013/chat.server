@@ -40,6 +40,10 @@ class Server(object):
                                       handler_class=WebSocketHandler).serve_forever()
                 else:
                     pywsgi.WSGIServer(('', port), app).serve_forever()
+            elif eio.async_mode == 'gevent_uwsgi':
+                print('Start the application through the uwsgi server. Example:')
+                print('uwsgi --http :5000 --gevent 1000 --http-websockets --master '
+                      '--wsgi-file app.py --callable app')
             else:
                 print('Unknown async_mode: ' + eio.async_mode)
 
