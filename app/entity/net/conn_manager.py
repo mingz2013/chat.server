@@ -12,7 +12,7 @@ class ConnectionManager(object):
     def addConnection(self, sid):
         _conn = Connection(sid)
         if self._connections.has_key(sid):
-            raise Exception("系统记录冲突")
+            raise Exception("add a connection already had")
         self._connections[sid] = _conn
 
     def dropConnection(self, sid):
@@ -25,16 +25,14 @@ class ConnectionManager(object):
         return self._connections.get(sid)
 
     def disconnect(self, sid):
-        """根据连接ID主动断开与客户端的连接
-        """
+        """根据连接ID主动断开与客户端的连接"""
         _conn = self.getConnection(sid)
         if _conn:
             _conn.disconnect()
             self.dropConnection(sid)
 
     def send(self, msg, receivers):
-        """主动推送消息
-        """
+        """主动推送消息"""
         assert isinstance(receivers, list), "receivers type error"
         for target in receivers:
             try:
