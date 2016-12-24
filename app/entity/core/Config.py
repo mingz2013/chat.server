@@ -2,7 +2,6 @@
 __author__ = 'zhaojm'
 
 
-# 每一个链接的管理器
-class ConnectionManager(object):
+class Config(object):
     def __init__(self):
         pass

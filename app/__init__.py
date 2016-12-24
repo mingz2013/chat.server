@@ -21,13 +21,18 @@ def register_routes(app):
     for module in _import_submodules_from_package(controllers):
         if hasattr(module, 'api'):
             bp = getattr(module, 'api')
+            if bp and isinstance(bp, Blueprint):
+                app.register_blueprint(bp)
+            else:
+                app.logger.error('bp is not blusprint')
+        # elif hasattr(module, 'ws'):
+        #     bp = getattr(module, 'ws')
+        #     if bp and isinstance(bp, Blueprint):
+        #         sockets.register_blueprint(bp)
+        #     else:
+        #         app.logger.error('bp is not blusprint')
         else:
-            app.logger.error('api not in module')
-
-        if bp and isinstance(bp, Blueprint):
-            app.register_blueprint(bp)
-        else:
-            app.logger.error('bp is not blusprint')
+            app.logger.error('not found needed module')
 
     @app.errorhandler(403)
     def error_403(error):
@@ -64,22 +69,28 @@ def register_logging(app):
 
 
 from flask_mongoengine import MongoEngine
-
 db = MongoEngine()
 
+import engineio
 
-def create_app(config_mode):
+async_mode = 'gevent'
+eio = engineio.Server(async_mode=async_mode)
+
+from .entity.net import eio_controller
+
+
+def create_app(mode):
     from flask import Flask
     app = Flask(__name__)
+
     from config import config_dict
-    app.config.from_object(config_dict[config_mode])
-    config_dict[config_mode].init_app(app)
-    app.config_mode = config_mode
+    app.config.from_object(config_dict[mode])
+    config_dict[mode].init_app(app)
+    app.config_mode = mode
 
     db.init_app(app)
+    app.wsgi_app = engineio.Middleware(eio, app.wsgi_app)
 
     register_logging(app)
     register_routes(app)
-
     return app
-
