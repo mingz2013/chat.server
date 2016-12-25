@@ -1,23 +1,19 @@
-twisted 带起整个项目
-flask 作为web框架
-autobahn 整合websocket
-数据库 mongodb
-redis
+客户端和服务器通信
 
-chat 项目
-前端 react+es6+webpack+redux
+客户端请求,服务器响应
 
-blog 项目
-前端 webpack jquery es6 bootstrap
+客户端发送心跳包,来请求服务器响应
 
-game 项目
-前端 cocosjs jquery es6 bootstrap webpack
+服务器不主动向客户端推送消息,只通过心跳包推送消息
 
-admin 项目
-前端 webpack jquery es6 bootstrap
+跟web开发就一样了
 
-Home 
-首页,做成左右滑动的页面,用于介绍每个产品
+只需要底层连接保证连接
+
+上层一样
+
+消息存储在数据库,当要推送消息的时候,从数据库拿出来推出去
+
 
 
 
