@@ -17,9 +17,9 @@ def register(conn, manager, data):
         token = username + password
         auth = {"token": token}
 
-        conn.send({"retcode": 0, "cmd": "register", "result": auth})
+        conn.send({"cmd": "register", "data": {"retcode": 0, "result": auth}})
     except Exception, e:
-        conn.send({"retcode": -1, "cmd": "register", "errmsg": e.message})
+        conn.send({"cmd": "register", "data": {"retcode": -1, "errmsg": e.message}})
 
 
 @msgHandler.on("login")
@@ -36,9 +36,9 @@ def login(conn, manager, data):
         else:
             token = username + password
             auth = {"token": token}
-            conn.send({"retcode": 0, "cmd": "register", "result": auth})
+            conn.send({"cmd": "login", "data": {"retcode": 0, "result": auth}})
     except Exception, e:
-        conn.send({"retcode": -1, "cmd": "login", "errmsg": e.message})
+        conn.send({"cmd": "login", "data": {"retcode": -1, "errmsg": e.message}})
 
 
 @msgHandler.on("account_info")
