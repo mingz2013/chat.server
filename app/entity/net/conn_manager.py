@@ -18,7 +18,7 @@ class ConnectionManager(object):
     def dropConnection(self, sid):
         try:
             del self._connections[sid]
-        except Exception as e:
+        except Exception, e:
             print e
 
     def getConnection(self, sid):
@@ -34,9 +34,9 @@ class ConnectionManager(object):
     def send(self, msg, receivers):
         """主动推送消息"""
         assert isinstance(receivers, list), "receivers type error"
-        for target in receivers:
+        for sid in receivers:
             try:
-                _conn = self.getConnection(target)
+                _conn = self.getConnection(sid)
                 if _conn:
                     _conn.send(msg)
             except Exception, e:
