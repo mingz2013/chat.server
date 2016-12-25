@@ -30,10 +30,11 @@ def login(conn, manager, data):
             raise Exception("data not found")
         username = data.get("username")
         password = data.get("password")
-        ret = UserDao.check_login(username, password)
-        if not ret:
+        user = UserDao.check_login(username, password)
+        if not user:
             raise Exception("not auth pass..")
         else:
+            conn.set_user(user)
             token = username + password
             auth = {"token": token}
             conn.send({"cmd": "login", "data": {"retcode": 0, "result": auth}})

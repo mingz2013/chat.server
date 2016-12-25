@@ -8,6 +8,7 @@ from app.entity import eio
 class Connection(object):
     def __init__(self, sid):
         self.sid = sid
+        self.user = None
         pass
 
     def send(self, data, binary=False):
@@ -16,3 +17,9 @@ class Connection(object):
     def disconnect(self):
         eio.disconnect(self.sid)
         pass
+
+    def set_user(self, user):
+        self.user = user
+
+    def get_user(self):
+        return self.user
