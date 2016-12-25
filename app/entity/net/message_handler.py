@@ -37,6 +37,5 @@ class MessageHandler(object):
 
 
 msgHandler = MessageHandler()
-from ..handlers import *
 
 __all__ = [msgHandler]

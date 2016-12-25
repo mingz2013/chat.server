@@ -2,6 +2,7 @@
 
 import os
 import sys
+
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath('.'))
 
@@ -12,11 +13,12 @@ if mode:
     print 'current config mode: %s' % mode
 
 from app import create_app
-app = create_app(mode)
 
+app = create_app(mode)
 
 if __name__ == '__main__':
     from helpers.default_encoding import init_encoding
+
     init_encoding()
 
     # app.debug = True

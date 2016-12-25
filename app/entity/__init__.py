@@ -2,6 +2,7 @@
 __author__ = 'zhaojm'
 
 import engineio
+
 async_mode = 'gevent'
 eio = engineio.Server(async_mode=async_mode)
 from app.entity.net import eio_controller
@@ -36,14 +37,12 @@ class Server(object):
                 except ImportError:
                     websocket = False
                 if websocket:
-                    pywsgi.WSGIServer(('', port), app,
-                                      handler_class=WebSocketHandler).serve_forever()
+                    pywsgi.WSGIServer(('', port), app, handler_class=WebSocketHandler).serve_forever()
                 else:
                     pywsgi.WSGIServer(('', port), app).serve_forever()
             elif eio.async_mode == 'gevent_uwsgi':
                 print('Start the application through the uwsgi server. Example:')
-                print('uwsgi --http :5000 --gevent 1000 --http-websockets --master '
-                      '--wsgi-file app.py --callable app')
+                print('uwsgi --http :5000 --gevent 1000 --http-websockets --master --wsgi-file app.py --callable app')
             else:
                 print('Unknown async_mode: ' + eio.async_mode)
 
