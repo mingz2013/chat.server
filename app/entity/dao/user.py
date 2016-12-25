@@ -22,3 +22,8 @@ class UserDao(object):
     def get_user_list():
         user_list = User.objects
         return user_list
+
+    @staticmethod
+    def find_user_by_username(username):
+        user = User.objects(username=username).first()
+        return user

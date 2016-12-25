@@ -13,6 +13,9 @@ def register(conn, manager, data):
             raise Exception("data not found")
         username = data.get("username")
         password = data.get("password")
+        user = UserDao.find_user_by_username(username)
+        if user:
+            raise Exception("username is exists already")
         UserDao.add_user(username, password)
         token = username + password
         auth = {"token": token}
