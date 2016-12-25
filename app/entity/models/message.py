@@ -6,6 +6,7 @@ from app import db
 
 class Message(db.Document):
     send_time = db.DateTimeField()
-    content = db.StringField()
     send_from = db.ObjectIdField()
-
+    send_to = db.ObjectIdField()
+    content = db.StringField()
+    type = db.StringField()

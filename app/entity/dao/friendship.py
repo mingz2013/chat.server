@@ -2,10 +2,10 @@
 __author__ = 'zhaojm'
 
 
-class MessageDao(object):
+class FriendshipDao(object):
     def __init__(self):
         pass
 
     @staticmethod
-    def message_add():
+    def friendship_add():
         pass
