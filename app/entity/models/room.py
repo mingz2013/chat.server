@@ -1,18 +1,18 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app import db
+from mongoengine import Document, ObjectIdField, DateTimeField, StringField
 
 
-class Room(db.Document):
-    creator = db.ObjectIdField()
+class Room(Document):
+    creator = ObjectIdField()
 
 
 class PrivateRoom(Room):
     # 私聊窗口
-    friend = db.ObjectIdField()
+    friend = ObjectIdField()
 
 
 class PublicRoom(Room):
     # 多聊窗口
-    members = db.ObjectIdField()
+    members = ObjectIdField()

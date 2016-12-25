@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app import db
+from mongoengine import Document, ObjectIdField
 
 
-class Friendship(db.Document):
-    user = db.ObjectIdField()
-    friend = db.ObjectIdField()
+class Friendship(Document):
+    user = ObjectIdField()
+    friend = ObjectIdField()

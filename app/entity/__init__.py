@@ -7,6 +7,10 @@ async_mode = 'gevent'
 eio = engineio.Server(async_mode=async_mode)
 from app.entity.net import eio_controller
 
+from mongoengine import connect
+
+connect('chat')
+
 
 class Server(object):
     def __init__(self):

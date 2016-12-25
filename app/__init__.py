@@ -68,9 +68,9 @@ def register_logging(app):
     pass
 
 
-from flask_mongoengine import MongoEngine
-
-db = MongoEngine()
+# from flask_mongoengine import MongoEngine
+#
+# db = MongoEngine()
 
 
 def create_app(mode):
@@ -82,7 +82,7 @@ def create_app(mode):
     config_dict[mode].init_app(app)
     app.config_mode = mode
 
-    db.init_app(app)
+    # db.init_app(app)
 
     register_logging(app)
     register_routes(app)

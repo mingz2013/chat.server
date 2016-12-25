@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app import db
+from mongoengine import Document, ObjectIdField, DateTimeField, StringField
 
 
-class User(db.Document):
-    username = db.StringField(required=True)
-    password = db.StringField(max_length=50)
+class User(Document):
+    username = StringField(required=True)
+    password = StringField(max_length=50)
