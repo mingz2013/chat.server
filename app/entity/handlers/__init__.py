@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
-from . import account, chat, heartbeat, system
+from . import account, friendship, heartbeat, message, room, user
 # __all__ = [
 #     account, chat, heartbeat, system
 # ]

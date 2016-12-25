@@ -11,7 +11,7 @@ class MessageHandler(object):
         self.connManager = ConnectionManager()
 
     def on(self, event, handler=None):
-        print "on.."
+        # print "on.."
 
         def set_handler(handler):
             self._handlers[event] = handler
