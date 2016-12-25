@@ -15,9 +15,10 @@ class UserDao(object):
 
     @staticmethod
     def check_login(username, password):
-        return True
+        user = User.objects(username=username, password=password).first()
+        return user
 
     @staticmethod
     def get_user_list():
-        user_list = []
+        user_list = User.objects
         return user_list
