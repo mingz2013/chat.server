@@ -11,7 +11,7 @@ class Connection(object):
         self.user = None
         pass
 
-    def send(self, data, binary=False):
+    def send(self, data, binary=None):
         print "send, ", data
         io.send(room=self.sid, data=data, binary=binary)
 
