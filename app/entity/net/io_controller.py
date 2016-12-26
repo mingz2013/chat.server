@@ -1,25 +1,25 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app.entity import eio
+import json
+from app.entity import io
 
 from .msg_handler import msgHandler
 
 
-@eio.on('connect')
+@io.on('connect')
 def connect(sid, environ):
     print "connect ", sid
     msgHandler.connManager.addConnection(sid)
 
 
-@eio.on('message')
+@io.on('message')
 def message(sid, message):
     print 'message from', sid, message
-    # eio.send(sid, 'Thank you for your message!', binary=False)
-    msgHandler.handle_message(sid, message)
+    msgHandler.handle_message(sid, json.loads(message))
 
 
-@eio.on('disconnect')
+@io.on('disconnect')
 def disconnect(sid):
     print 'disconnect ', sid
     msgHandler.connManager.dropConnection(sid)
