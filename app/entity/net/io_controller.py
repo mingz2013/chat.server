@@ -16,7 +16,7 @@ def connect(sid, environ):
 @io.on('message')
 def message(sid, message):
     print 'message from', sid, message
-    msgHandler.handle_message(sid, json.loads(message))
+    msgHandler.handle_message(sid, message)
 
 
 @io.on('disconnect')
