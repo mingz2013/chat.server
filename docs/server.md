@@ -70,3 +70,5 @@ packet 只定义发送的包,回应包很简单,很固定,
 
 
 engine.io 不支持断线重连,看看socket.io, 或者其他人为engino写的reconnect库
+
+换用socket.io 解决自动重连,心跳包问题
