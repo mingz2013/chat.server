@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.message_handler import msgHandler
+from ..net.msg_handler import msgHandler
 
 
 @msgHandler.on("room_create")

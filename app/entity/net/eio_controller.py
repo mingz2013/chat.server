@@ -3,7 +3,7 @@ __author__ = 'zhaojm'
 
 from app.entity import eio
 
-from .message_handler import msgHandler
+from .msg_handler import msgHandler
 
 
 @eio.on('connect')

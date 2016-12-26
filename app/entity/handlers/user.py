@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.message_handler import msgHandler
+from ..net.msg_handler import msgHandler
 from ..dao.user import UserDao
 from ..core.utils import model2dict
+
 
 @msgHandler.on("user_find")
 def user_find(conn, manager, data):
