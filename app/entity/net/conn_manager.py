@@ -41,3 +41,9 @@ class ConnectionManager(object):
                     _conn.send(msg)
             except Exception, e:
                 print e
+
+    def getConnectionByUsername(self, username):
+        for (sid, conn) in self._connections:
+            user = conn.user
+            if user.get("username") == username:
+                return user
