@@ -12,7 +12,7 @@ def friends_add(conn, manager, data):
             raise Exception("data not found")
         send_to = data.get("username")
         send_from = conn.get_user().username
-
+        print send_from
         send_to_conn = manager.getConnectionByUsername(send_to)
         if send_to_conn:
             send_to_conn.send({
@@ -30,6 +30,7 @@ def friends_add(conn, manager, data):
             print ret
         conn.send({"cmd": "friends_add", "data": {"retcode": 0, "result": "success"}})
     except Exception, e:
+        print e
         conn.send({"cmd": "friends_add", "data": {"retcode": -1, "errmsg": e.message}})
 
 

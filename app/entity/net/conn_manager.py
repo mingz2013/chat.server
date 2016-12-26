@@ -43,7 +43,7 @@ class ConnectionManager(object):
                 print e
 
     def getConnectionByUsername(self, username):
-        for (sid, conn) in self._connections:
+        for (sid, conn) in self._connections.items():
             user = conn.user
-            if user.get("username") == username:
-                return user
+            if user.username == username:
+                return conn
