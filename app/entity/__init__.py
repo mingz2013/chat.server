@@ -18,6 +18,7 @@ class Server(object):
 
     def run(self,
             app,
+            host='localhost',
             port=5000,
             reload=True
             ):
@@ -29,7 +30,7 @@ class Server(object):
                 # deploy with eventlet
                 import eventlet
                 from eventlet import wsgi
-                wsgi.server(eventlet.listen(('', port)), app)
+                wsgi.server(eventlet.listen((host, port)), app)
             elif eio.async_mode == 'gevent':
                 # deploy with gevent
                 from gevent import monkey
@@ -41,9 +42,9 @@ class Server(object):
                 except ImportError:
                     websocket = False
                 if websocket:
-                    pywsgi.WSGIServer(('', port), app, handler_class=WebSocketHandler).serve_forever()
+                    pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler).serve_forever()
                 else:
-                    pywsgi.WSGIServer(('', port), app).serve_forever()
+                    pywsgi.WSGIServer((host, port), app).serve_forever()
             elif eio.async_mode == 'gevent_uwsgi':
                 print('Start the application through the uwsgi server. Example:')
                 print('uwsgi --http :5000 --gevent 1000 --http-websockets --master --wsgi-file app.py --callable app')
