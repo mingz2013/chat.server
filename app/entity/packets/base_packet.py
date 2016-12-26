@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
+from .packet import Packet
 
-class BasePacket(object):
-    def __init__(self):
-        pass
+
+class BasePacket(Packet):
+    def __init__(self, cmd, data):
+        Packet.__init__(self, cmd, data)
 
     def send(self):
         pass
