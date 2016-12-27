@@ -11,9 +11,9 @@ class Connection(object):
         self.user = None
         pass
 
-    def send(self, data, binary=None):
+    def send(self, data, binary=None, callback=None):
         print "send, ", data
-        io.send(room=self.sid, data=data, binary=binary)
+        io.send(room=self.sid, data=data, binary=binary, callback=callback)
 
     def disconnect(self):
         io.disconnect(self.sid)
