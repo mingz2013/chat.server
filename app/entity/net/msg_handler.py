@@ -13,13 +13,13 @@ class MessageHandler(object):
     def on(self, event, handler=None):
         # print "on.."
 
-        def set_handler(handler):
+        def decorator(handler):
             self._handlers[event] = handler
             return handler
 
         if handler is None:
-            return set_handler
-        set_handler(handler)
+            return decorator
+        decorator(handler)
 
     def handle_message(self, sid, message):
         print "handle_message", sid
