@@ -43,3 +43,18 @@ packet 只定义发送的包,回应包很简单,很固定,
 engine.io 不支持断线重连,看看socket.io, 或者其他人为engino写的reconnect库
 
 换用socket.io 解决自动重连,心跳包问题
+
+客户端发给服务器,服务器返回retcode响应,服务器发给客户端,客户端不返回retcode
+
+---
+
+
+前端服务器会调用connector的send函数将响应或者推送的消息发送给客户端，
+send调用不会直接将要发送的消息通过socket直接发送给客户端，
+而是将发送任务调度给CoPushScheduler，
+CoPushScheduler可以实现具体的发送策略。
+pomelo中提供了两种方式的pushScheduler，
+direct会立即将用户的响应发送给用户，
+buffer则会缓冲发送任务，并按时冲刷，
+pomelo默认使用的是direct的方式，
+如果想使用buffer的方式，可以通过如下的调用启用:
