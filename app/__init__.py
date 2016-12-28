@@ -7,7 +7,7 @@ async_mode = 'gevent'
 import socketio as _io
 
 io = _io.Server(logger=True, async_mode=async_mode)
-from .net import io_controller
+from .net import io_handler
 
 from mongoengine import connect
 
