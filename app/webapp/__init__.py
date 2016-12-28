@@ -85,7 +85,6 @@ def create_webapp(mode):
 
 
 import os
-import sys
 
 mode = os.getenv('mingz.server.config.mode') or 'default'
 webapp = create_webapp(mode)
