@@ -68,16 +68,11 @@ def register_logging(app):
     pass
 
 
-# from flask_mongoengine import MongoEngine
-#
-# db = MongoEngine()
-
-
-def create_app(mode):
+def create_webapp(mode):
     from flask import Flask
     app = Flask(__name__)
 
-    from config import config_dict
+    from .config import config_dict
     app.config.from_object(config_dict[mode])
     config_dict[mode].init_app(app)
     app.config_mode = mode
@@ -87,3 +82,10 @@ def create_app(mode):
     register_logging(app)
     register_routes(app)
     return app
+
+
+import os
+import sys
+
+mode = os.getenv('mingz.server.config.mode') or 'default'
+webapp = create_webapp(mode)
