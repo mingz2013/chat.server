@@ -1,89 +1,61 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
+async_mode = 'gevent'
+# 控制用engineio 还是socketio
+# import engineio as _io
+import socketio as _io
 
-def _import_submodules_from_package(package):
-    import pkgutil
+io = _io.Server(logger=True, async_mode=async_mode)
+from app.entity.net import io_controller
 
-    modules = []
-    for importer, modname, ispkg in pkgutil.iter_modules(package.__path__, prefix=package.__name__ + "."):
-        if ispkg:
-            modules.extend(_import_submodules_from_package(__import__(modname, fromlist="dummy")))
-        else:
-            modules.append(__import__(modname, fromlist="dummy"))
-    return modules
+from mongoengine import connect
+
+connect('chat')
 
 
-def register_routes(app):
-    from . import controllers
-    from flask.blueprints import Blueprint
+class Server(object):
+    def __init__(self):
+        pass
 
-    for module in _import_submodules_from_package(controllers):
-        if hasattr(module, 'api'):
-            bp = getattr(module, 'api')
-            if bp and isinstance(bp, Blueprint):
-                app.register_blueprint(bp)
+    def run(self,
+            app,
+            host='localhost',
+            port=5000,
+            reload=True
+            ):
+        def _run_server():
+            if io.async_mode == 'threading':
+                # deploy with Werkzeug
+                app.run(threaded=True)
+            elif io.async_mode == 'eventlet':
+                # deploy with eventlet
+                import eventlet
+                import eventlet.wsgi
+                eventlet.wsgi.server(eventlet.listen((host, port)), app)
+            elif io.async_mode == 'gevent':
+                # deploy with gevent
+                from gevent import pywsgi
+                try:
+                    from geventwebsocket.handler import WebSocketHandler
+                    websocket = True
+                except ImportError:
+                    websocket = False
+                if websocket:
+                    pywsgi.WSGIServer((host, port), app,
+                                      handler_class=WebSocketHandler).serve_forever()
+                else:
+                    pywsgi.WSGIServer((host, port), app).serve_forever()
+            elif io.async_mode == 'gevent_uwsgi':
+                print('Start the application through the uwsgi server. Example:')
+                print('uwsgi --http :5000 --gevent 1000 --http-websockets --master --wsgi-file app.py --callable app')
             else:
-                app.logger.error('bp is not blusprint')
-        # elif hasattr(module, 'ws'):
-        #     bp = getattr(module, 'ws')
-        #     if bp and isinstance(bp, Blueprint):
-        #         sockets.register_blueprint(bp)
-        #     else:
-        #         app.logger.error('bp is not blusprint')
+                print('Unknown async_mode: ' + io.async_mode)
+
+        app.wsgi_app = _io.Middleware(io, app.wsgi_app)
+
+        if reload:
+            from werkzeug.serving import run_with_reloader
+            run_with_reloader(_run_server)
         else:
-            app.logger.error('not found needed module')
-
-    @app.errorhandler(403)
-    def error_403(error):
-        app.logger.error("403")
-        # return render_template('errors/403.html'), 403
-        return '403', 403
-
-    @app.errorhandler(404)
-    def error_404(error):
-        app.logger.error("404")
-        # return render_template('errors/404.html'), 404
-        return '404', 404
-
-
-def register_logging(app):
-    import logging
-    from logging.handlers import RotatingFileHandler
-    # 内部日志
-    rotating_handler1 = RotatingFileHandler('logs/info.log', maxBytes=1 * 1024 * 1024, backupCount=5)
-    rotating_handler2 = RotatingFileHandler('logs/error.log', maxBytes=1 * 1024 * 1024, backupCount=2)
-    formatter1 = logging.Formatter("-" * 100 +
-                                   '\n %(asctime)s %(levelname)s - '
-                                   'in %(funcName)s [%(filename)s:%(lineno)d]:\n %(message)s')
-    rotating_handler1.setFormatter(formatter1)
-    rotating_handler2.setFormatter(formatter1)
-    app.logger.addHandler(rotating_handler1)
-    app.logger.addHandler(rotating_handler2)
-    app.logger.setLevel(logging.INFO)
-    rotating_handler2.setLevel(logging.ERROR)
-    if app.config.get("DEBUG"):
-        # app.logger.addHandler(logging.StreamHandler())
-        app.logger.setLevel(logging.DEBUG)
-    pass
-
-
-# from flask_mongoengine import MongoEngine
-#
-# db = MongoEngine()
-
-
-def create_app(mode):
-    from flask import Flask
-    app = Flask(__name__)
-
-    from config import config_dict
-    app.config.from_object(config_dict[mode])
-    config_dict[mode].init_app(app)
-    app.config_mode = mode
-
-    # db.init_app(app)
-
-    register_logging(app)
-    register_routes(app)
-    return app
+            _run_server()

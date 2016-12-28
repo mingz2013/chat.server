@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from app.entity import io
+from .. import io
 
 
 # 每一个链接

@@ -2,7 +2,7 @@
 __author__ = 'zhaojm'
 
 import json
-from app.entity import io
+from .. import io
 
 from .msg_handler import msgHandler
 
