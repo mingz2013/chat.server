@@ -42,8 +42,7 @@ class Server(object):
                 except ImportError:
                     websocket = False
                 if websocket:
-                    pywsgi.WSGIServer((host, port), app,
-                                      handler_class=WebSocketHandler).serve_forever()
+                    pywsgi.WSGIServer((host, port), app, handler_class=WebSocketHandler).serve_forever()
                 else:
                     pywsgi.WSGIServer((host, port), app).serve_forever()
             elif io.async_mode == 'gevent_uwsgi':
