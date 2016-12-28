@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath('.'))
 
 
 if __name__ == '__main__':
-    from .core.default_encoding import init_encoding
+    from app.core.default_encoding import init_encoding
 
     init_encoding()
 
