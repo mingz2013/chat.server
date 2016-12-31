@@ -6,7 +6,7 @@ from mongoengine import Document, ObjectIdField, DateTimeField, StringField
 
 class Message(Document):
     send_time = DateTimeField()
-    send_from = ObjectIdField()
-    send_to = ObjectIdField()
+    send_from = StringField()
+    send_to = StringField()
     content = StringField()
     type = StringField()
