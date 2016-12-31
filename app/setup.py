@@ -15,4 +15,5 @@ if __name__ == '__main__':
     from app import Server
     from app.webapp import webapp
 
+    print "run on 0.0.0.0:5000"
     Server().run(webapp, host="0.0.0.0", port=5000, reload=True)
