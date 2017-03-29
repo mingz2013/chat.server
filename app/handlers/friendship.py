@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
-from ..net.msg_handler import msgHandler
+from ..net.msg_handler import msg_handler
 from ..dao.message import MessageDao
 
 
-@msgHandler.on("friends_add")
+@msg_handler.on("friends_add")
 def friends_add(conn, manager, data):
     print "friends add", data
     try:
@@ -35,13 +35,13 @@ def friends_add(conn, manager, data):
         conn.send({"cmd": "friends_add", "data": {"retcode": -1, "errmsg": e.message}})
 
 
-@msgHandler.on("friends_list")
+@msg_handler.on("friends_list")
 def friends_list(conn, manager, data):
     print data
     pass
 
 
-@msgHandler.on("friends_remove")
+@msg_handler.on("friends_remove")
 def friends_remove(conn, manager, data):
     print data
     pass

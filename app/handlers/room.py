@@ -1,39 +1,39 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.msg_handler import msgHandler
+from ..net.msg_handler import msg_handler
 
 
-@msgHandler.on("room_create")
+@msg_handler.on("room_create")
 def room_create(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_invite")
+@msg_handler.on("room_invite")
 def room_invite(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_drop")
+@msg_handler.on("room_drop")
 def room_drop(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_list")
+@msg_handler.on("room_list")
 def room_list(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_add")
+@msg_handler.on("room_add")
 def room_add(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_info")
+@msg_handler.on("room_info")
 def room_info(conn, manager, data):
     pass
 
 
-@msgHandler.on("room_quit")
+@msg_handler.on("room_quit")
 def room_quit(conn, manager, data):
     pass

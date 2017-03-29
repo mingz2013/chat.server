@@ -1,18 +1,18 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.msg_handler import msgHandler
+from ..net.msg_handler import msg_handler
 from ..dao.user import UserDao
 from ..core.utils import model2dict
 
 
-@msgHandler.on("user_find")
+@msg_handler.on("user_find")
 def user_find(conn, manager, data):
     print data
     pass
 
 
-@msgHandler.on("user_list")
+@msg_handler.on("user_list")
 def get_user_list(conn, manager, data):
     print data
     try:
@@ -29,7 +29,7 @@ def get_user_list(conn, manager, data):
         conn.send({"cmd": "user_list", "data": {"retcode": -1, "errmsg": e.message}})
 
 
-@msgHandler.on("user_info")
+@msg_handler.on("user_info")
 def user_info(conn, manager, data):
     print data
     try:

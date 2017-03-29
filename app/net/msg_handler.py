@@ -8,7 +8,7 @@ class MessageHandler(object):
     def __init__(self):
         self._handlers = {}
 
-        self.connManager = ConnectionManager()
+        self.conn_manager = ConnectionManager()
 
     def on(self, event, handler=None):
         # print "on.."
@@ -25,7 +25,7 @@ class MessageHandler(object):
         print "handle_message", sid
         cmd = message.get('cmd')
         data = message.get('data')
-        conn = self.connManager.getConnection(sid)
+        conn = self.conn_manager.get_connection(sid)
         return self._trigger_event(cmd, conn, data)
 
     def _trigger_event(self, event, conn, data):
@@ -36,13 +36,14 @@ class MessageHandler(object):
             #     return self.start_background_task(self.handlers[event], *args)
             # else:
             #     return self.handlers[event](*args)
-            return self._handlers[event](conn, self.connManager, data)
+            return self._handlers[event](conn, self.conn_manager, data)
         else:
             print "event not in handlers.."
 
 
-msgHandler = MessageHandler()
+msg_handler = MessageHandler()
 
 # 加载各个handlers, 不可删除, from ..handlers import *
 from ..handlers import *
-__all__ = [msgHandler]
+
+__all__ = [msg_handler]

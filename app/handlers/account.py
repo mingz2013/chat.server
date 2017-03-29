@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.msg_handler import msgHandler
+from ..net.msg_handler import msg_handler
 from ..dao import UserDao
 
 
-@msgHandler.on("register")
+@msg_handler.on("register")
 def register(conn, manager, data):
     print data
     try:
@@ -25,7 +25,7 @@ def register(conn, manager, data):
         conn.send({"cmd": "register", "data": {"retcode": -1, "errmsg": e.message}})
 
 
-@msgHandler.on("login")
+@msg_handler.on("login")
 def login(conn, manager, data):
     print data
     try:
@@ -45,6 +45,6 @@ def login(conn, manager, data):
         conn.send({"cmd": "login", "data": {"retcode": -1, "errmsg": e.message}})
 
 
-@msgHandler.on("account_info")
+@msg_handler.on("account_info")
 def account_info(conn, manager, data):
     pass

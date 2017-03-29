@@ -1,16 +1,16 @@
 # -*- coding:utf-8 -*-
 __author__ = 'zhaojm'
 
-from ..net.msg_handler import msgHandler
+from ..net.msg_handler import msg_handler
 
 
-@msgHandler.on("send_message")
+@msg_handler.on("send_message")
 def send_message(conn, manager, data):
     print data
     pass
 
 
-@msgHandler.on("request_message")
+@msg_handler.on("request_message")
 def request_message(conn, manager, data):
     print data
     pass
