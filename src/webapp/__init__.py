@@ -13,7 +13,7 @@ def _import_submodules_from_package(package):
 
 
 def register_routes(app):
-    from . import controllers
+    from webapp import controllers
     from flask.blueprints import Blueprint
 
     for module in _import_submodules_from_package(controllers):

@@ -43,7 +43,19 @@ class MessageHandler(object):
 
 msg_handler = MessageHandler()
 
-# 加载各个handlers, 不可删除, from ..handlers import *
-from ..handlers import *
+
+def _import_submodules_from_package(package):
+    import pkgutil
+
+    for importer, modname, ispkg in pkgutil.iter_modules(package.__path__, prefix=package.__name__ + "."):
+        if ispkg:
+            _import_submodules_from_package(__import__(modname, fromlist="dummy"))
+        else:
+            yield __import__(modname, fromlist="dummy")
+
+
+import app.handlers
+
+_import_submodules_from_package(app.handlers)
 
 __all__ = [msg_handler]
