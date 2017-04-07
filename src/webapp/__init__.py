@@ -5,11 +5,13 @@ __author__ = 'zhaojm'
 def _import_submodules_from_package(package):
     import pkgutil
 
+    modules = []
     for importer, modname, ispkg in pkgutil.iter_modules(package.__path__, prefix=package.__name__ + "."):
         if ispkg:
-            _import_submodules_from_package(__import__(modname, fromlist="dummy"))
+            modules.extend(_import_submodules_from_package(__import__(modname, fromlist="dummy")))
         else:
-            yield __import__(modname, fromlist="dummy")
+            modules.append(__import__(modname, fromlist="dummy"))
+    return modules
 
 
 def register_routes(app):
